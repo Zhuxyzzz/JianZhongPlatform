@@ -1,0 +1,166 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.sport-record-container.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  height: 100vh;
+  padding: 10rpx;
+}
+/* 顶部数据概览 */
+.summary-section.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 10rpx;
+  margin-bottom: 10rpx;
+}
+.summary-item.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.summary-icon.data-v-9e7b5d2a {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 6rpx;
+}
+.summary-info.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.summary-value.data-v-9e7b5d2a {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+.summary-label.data-v-9e7b5d2a {
+  font-size: 24rpx;
+  color: #666;
+}
+/* 运动记录列表 */
+.record-section.data-v-9e7b5d2a {
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 10rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.record-header.data-v-9e7b5d2a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.record-title.data-v-9e7b5d2a {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.add-record-btn.data-v-9e7b5d2a {
+  font-size: 24rpx;
+  padding: 0 10rpx;
+}
+.no-record-tips.data-v-9e7b5d2a {
+  text-align: center;
+  color: #999;
+  font-size: 24rpx;
+  margin-top: 40rpx;
+}
+.record-item.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding: 10rpx 0;
+}
+.record-left.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.record-type.data-v-9e7b5d2a {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+.record-date.data-v-9e7b5d2a {
+  font-size: 22rpx;
+  color: #999;
+}
+.record-right.data-v-9e7b5d2a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.record-duration.data-v-9e7b5d2a,
+.record-distance.data-v-9e7b5d2a,
+.record-calories.data-v-9e7b5d2a {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 4rpx;
+}
+/* 添加记录弹窗 */
+.add-record-popup.data-v-9e7b5d2a {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup-content.data-v-9e7b5d2a {
+  width: 80%;
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+.popup-title.data-v-9e7b5d2a {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+.popup-form.data-v-9e7b5d2a {
+  margin-bottom: 20rpx;
+}
+.form-item.data-v-9e7b5d2a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.form-item text.data-v-9e7b5d2a {
+  font-size: 24rp;
+  color: #333;
+}
+.form-item input.data-v-9e7b5d2a {
+  width: 300rpx;
+  margin-left: 10rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 4rpx;
+  padding: 6rpx;
+  font-size: 24rpx;
+}
+.form-value.data-v-9e7b5d2a {
+  font-size: 24rpx;
+  color: #333;
+}
+.popup-actions.data-v-9e7b5d2a {
+  display: flex;
+  justify-content: flex-end;
+}
+.popup-actions button.data-v-9e7b5d2a {
+  margin-left: 10rpx;
+  font-size: 24rpx;
+}
+

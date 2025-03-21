@@ -1,0 +1,166 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.plan-personalized-container.data-v-803d55ea {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  padding: 10rpx;
+}
+/* 1. 顶部信息概览 */
+.user-info-section.data-v-803d55ea {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 10rpx;
+  border-radius: 8rpx;
+  margin-bottom: 10rpx;
+}
+.user-info-left.data-v-803d55ea {
+  margin-right: 10rpx;
+}
+.avatar.data-v-803d55ea {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+}
+.user-info-right.data-v-803d55ea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-name.data-v-803d55ea {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+}
+.user-stats.data-v-803d55ea {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 3rpx;
+}
+.user-goal.data-v-803d55ea {
+  font-size: 24rpx;
+  color: #ff7b54;
+  /* 可根据主题色调整 */
+}
+/* 2. 运动强度选择 */
+.intensity-section.data-v-803d55ea {
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 10rpx;
+  margin-bottom: 10rpx;
+}
+.section-title.data-v-803d55ea {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.intensity-options.data-v-803d55ea {
+  display: flex;
+  justify-content: space-between;
+}
+.intensity-item.data-v-803d55ea {
+  width: 32%;
+  background-color: #fafafa;
+  border-radius: 6rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rpx 0;
+}
+.intensity-item.active.data-v-803d55ea {
+  background-color: #ffe9e1;
+  /* 选中状态的背景色可自定义 */
+  border: 1rpx solid #ff7b54;
+}
+.intensity-icon.data-v-803d55ea {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 5rpx;
+}
+.intensity-item text.data-v-803d55ea {
+  font-size: 24rpx;
+  color: #333;
+}
+/* 3. 计划列表 */
+.plan-list-section.data-v-803d55ea {
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 10rpx;
+  margin-bottom: 10rpx;
+}
+.section-header.data-v-803d55ea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.refresh-button.data-v-803d55ea {
+  padding: 0 10rpx;
+  font-size: 24rpx;
+}
+.no-plan-tips.data-v-803d55ea {
+  text-align: center;
+  color: #999;
+  font-size: 24rpx;
+  padding: 20rpx 0;
+}
+.plan-item.data-v-803d55ea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding-bottom: 10rpx;
+}
+.plan-item.data-v-803d55ea:last-child {
+  border-bottom: none;
+}
+.plan-item-image.data-v-803d55ea {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 6rpx;
+  margin-right: 10rpx;
+}
+.plan-item-info.data-v-803d55ea {
+  flex: 1;
+}
+.plan-item-title.data-v-803d55ea {
+  font-size: 26rpx;
+  font-weight: bold;
+  margin-bottom: 4rpx;
+}
+.plan-item-desc.data-v-803d55ea {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 4rpx;
+}
+.plan-item-meta text.data-v-803d55ea {
+  font-size: 22rpx;
+  color: #999;
+  margin-right: 20rpx;
+}
+.plan-item-actions.data-v-803d55ea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.plan-item-actions button.data-v-803d55ea {
+  margin-bottom: 5rpx;
+  width: 100rpx;
+  text-align: center;
+}
+/* 4. 提示与说明 */
+.note-section.data-v-803d55ea {
+  padding: 10rpx;
+}
+.note-text.data-v-803d55ea {
+  font-size: 22rpx;
+  color: #999;
+  line-height: 1.4;
+}
+

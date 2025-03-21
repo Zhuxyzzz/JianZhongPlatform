@@ -2,6 +2,7 @@
   "navigationBarTitleText": "",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "u-image": "/uview-ui/components/u-image/u-image"
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "uni-goods-nav": "/components/uni-goods-nav/uni-goods-nav"
   }
 }

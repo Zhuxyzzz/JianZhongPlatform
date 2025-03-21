@@ -1,212 +1,217 @@
 <template>
-	<view class="u-wrap">
-		<view class="u-search-box">
-			<u-search placeholder="输入名称"></u-search>
-		</view>
-		<view class="u-menu-wrap">
-			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-				 :data-current="index" @tap.stop="swichMenu(index)">
-					<text class="u-line-1">{{item.name}}</text>
-				</view>
-			</scroll-view>
-			<block v-for="(item,index) in tabbar" :key="index">
-				<scroll-view scroll-y class="right-box" v-if="current==index">
-					<view class="page-view">
-						<view class="class-item">
-							<view class="item-title">
-								<text>{{item.name}}</text>
-							</view>
-							<view class="item-container">
-								<navigator 
-								class="thumb-box" 
-								v-for="(item1, index1) in item.children" 
-								:key="item1.id"
-								:url="'/pages/sf-detail/sf-detail?id='+item1.id"
-								>
-									<image class="item-menu-image" :src="item1.icon" mode=""></image>
-									<view class="item-menu-name">{{item1.name}}</view>
-								</navigator>
-							</view>
-						</view>
-					</view>
-				</scroll-view>
-			</block>
-		</view>
-	</view>
+  <view class="sport-home-container">
+
+    <!-- 1. 顶部 Banner 轮播 -->
+    <swiper
+      class="banner-swiper"
+      autoplay
+      interval="3000"
+      indicator-dots
+      circular
+    >
+      <swiper-item v-for="(item, index) in bannerList" :key="index">
+        <image
+          :src="item.img"
+          class="banner-image"
+          mode="aspectFill"
+        />
+      </swiper-item>
+    </swiper>
+
+    <!-- 2. 中间六个功能入口 -->
+    <view class="feature-grid">
+      <view
+        class="feature-item"
+        v-for="(feature, index) in features"
+        :key="index"
+        @tap="goFeature(feature)"
+      >
+        <image :src="feature.icon" class="feature-icon" mode="aspectFit" />
+        <text class="feature-text">{{ feature.title }}</text>
+      </view>
+    </view>
+
+    <!-- 3. 运动推荐区域 -->
+    <view class="recommend-section">
+      <view class="section-title">
+        <text>运动推荐</text>
+      </view>
+      <view class="recommend-list">
+        <view
+          class="recommend-card"
+          v-for="(item, idx) in recommendList"
+          :key="idx"
+          @tap="goRecommendDetail(item)"
+        >
+          <image :src="item.img" class="recommend-image" mode="aspectFill" />
+          <view class="recommend-info">
+            <text class="recommend-title">{{ item.title }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				tabbar: {},
-				scrollTop: 0, //tab标题的滚动条位置
-				current: 0, // 预设当前项的值
-				menuHeight: 0, // 左边菜单的高度
-				menuItemHeight: 0, // 左边菜单item的高度
-			}
-		},
-		computed: {
-			
-		},
-		async onLoad() {
-			const res=await this.$u.api.getCate()
-			this.tabbar=res
-		},
-		
-		methods: {
-			getImg() {
-				return Math.floor(Math.random() * 35);
-			},
-			// 点击左边的栏目切换
-			async swichMenu(index) {
-				if(index == this.current) return ;
-				this.current = index;
-				// 如果为0，意味着尚未初始化
-				if(this.menuHeight == 0 || this.menuItemHeight == 0) {
-					await this.getElRect('menu-scroll-view', 'menuHeight');
-					await this.getElRect('u-tab-item', 'menuItemHeight');
-				}
-				// 将菜单菜单活动item垂直居中
-				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
-			},
-			// 获取一个目标元素的高度
-			getElRect(elClass, dataVal) {
-				new Promise((resolve, reject) => {
-					const query = uni.createSelectorQuery().in(this);
-					query.select('.' + elClass).fields({size: true},res => {
-						// 如果节点尚未生成，res值为null，循环调用执行
-						if(!res) {
-							setTimeout(() => {
-								this.getElRect(elClass);
-							}, 10);
-							return ;
-						}
-						this[dataVal] = res.height;
-					}).exec();
-				})
-			}
-		}
-	}
+export default {
+  data() {
+    return {
+      // Banner 列表
+      bannerList: [
+        { img: '../../static/sports/images/banner1.jpg' },
+        { img: '../../static/sports/images/banner2.jpg' },
+      ],
+      // 中间六个功能：这里示例了六个功能，可自行替换标题、图标和跳转逻辑
+      features: [
+        {
+          title: '个性化运动计划',
+          icon: '../../static/sports/icons/icon_plan.png',
+          link: '/pages/sport/planPersonalized/planPersonalized' // 假设有对应页面
+        },
+        {
+          title: '运动数据记录',
+          icon: '../../static/sports/icons/icon_record.png',
+          link: '/pages/sport/sportsRecord/sportsRecord'
+        },
+        {
+          title: '运动数据分析',
+          icon: '../../static/sports/icons/icon_analysis.png',
+          link: '/pages/sport/sportsAnalysis/sportsAnalysis'
+        },
+        {
+          title: '运动学习与指导',
+          icon: '../../static/sports/icons/icon_learn.png',
+          link: '/pages/sport/exerciseGuide/exerciseGuide'
+        },
+        {
+          title: '社区互动与激励',
+          icon: '../../static/sports/icons/icon_community.png',
+          link: '/pages/sport/community/community'
+        },
+        {
+          title: '医生端运动管理',
+          icon: '../../static/sports/icons/icon_doctor.png',
+          link: '/pages/sport/doctorManagement/doctorManagement'
+        },
+      ],
+      // 运动推荐列表
+      recommendList: [
+        {
+          img: '../../static/sports/images/recommend1.jpg',
+          title: '每日一遍全身燃脂'
+        },
+        {
+          img: '../../static/sports/images/recommend2.jpg',
+          title: '十大减脂塑形运动'
+        }
+      ]
+    }
+  },
+  methods: {
+    // 点击功能入口
+    goFeature(feature) {
+      // 根据 feature.link 跳转页面
+      uni.navigateTo({
+        url: feature.link
+      })
+    },
+    // 点击运动推荐卡片
+    goRecommendDetail(item) {
+      // 可以跳转到对应的详情页
+      // 这里仅示例
+      uni.showToast({
+        title: `进入「${item.title}」详情`,
+        icon: 'none'
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-	.u-wrap {
-		height: calc(100vh);
-		/* #ifdef H5 */
-		height: calc(100vh - var(--window-top));
-		/* #endif */
-		display: flex;
-		flex-direction: column;
-	}
+.sport-home-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
 
-	.u-search-box {
-		padding: 18rpx 30rpx;
-	}
+/* 1. Banner 样式 */
+.banner-swiper {
+  width: 100%;
+  height: 400rpx;
+  margin-bottom: 10rpx;
+}
+.banner-image {
+  width: 100%;
+  height: 100%;
+}
 
-	.u-menu-wrap {
-		flex: 1;
-		display: flex;
-		overflow: hidden;
-	}
+/* 2. 中间六个功能入口 */
+.feature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  padding: 10rpx;
+  justify-content: space-between;
+  /* 让每个item大约占1/3宽度，一行显示3个 */
+}
+.feature-item {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+.feature-item:hover{
+	cursor: pointer;
+}
+.feature-icon {
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 6rpx;
+}
+.feature-text {
+  font-size: 24rpx;
+  color: #333;
+}
+.feature-text:hover {
+  color: aquamarine;
+}
 
-	.u-search-inner {
-		background-color: rgb(234, 234, 234);
-		border-radius: 100rpx;
-		display: flex;
-		align-items: center;
-		padding: 10rpx 16rpx;
-	}
-
-	.u-search-text {
-		font-size: 26rpx;
-		color: $u-tips-color;
-		margin-left: 10rpx;
-	}
-
-	.u-tab-view {
-		width: 200rpx;
-		height: 100%;
-	}
-
-	.u-tab-item {
-		height: 110rpx;
-		background: #f6f6f6;
-		box-sizing: border-box;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 26rpx;
-		color: #444;
-		font-weight: 400;
-		line-height: 1;
-	}
-	
-	.u-tab-item-active {
-		position: relative;
-		color: #000;
-		font-size: 30rpx;
-		font-weight: 600;
-		background: #fff;
-	}
-	
-	.u-tab-item-active::before {
-		content: "";
-		position: absolute;
-		border-left: 4px solid $u-type-primary;
-		height: 32rpx;
-		left: 0;
-		top: 39rpx;
-	}
-
-	.u-tab-view {
-		height: 100%;
-	}
-	
-	.right-box {
-		background-color: rgb(250, 250, 250);
-	}
-	
-	.page-view {
-		padding: 16rpx;
-	}
-	
-	.class-item {
-		margin-bottom: 30rpx;
-		background-color: #fff;
-		padding: 16rpx;
-		border-radius: 8rpx;
-	}
-	
-	.item-title {
-		font-size: 26rpx;
-		color: $u-main-color;
-		font-weight: bold;
-	}
-	
-	.item-menu-name {
-		font-weight: normal;
-		font-size: 24rpx;
-		color: $u-main-color;
-	}
-	
-	.item-container {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	
-	.thumb-box {
-		width: 33.333333%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		margin-top: 20rpx;
-	}
-	
-	.item-menu-image {
-		width: 120rpx;
-		height: 120rpx;
-	}
+/* 3. 运动推荐区域 */
+.recommend-section {
+  margin-top: 10rpx;
+  background-color: #fff;
+  padding: 10rpx;
+}
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.recommend-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.recommend-card {
+  width: 48%;
+  background-color: #fff;
+  border-radius: 8rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+}
+.recommend-image {
+  width: 100%;
+  height: 250rpx;
+}
+.recommend-info {
+  padding: 8rpx;
+}
+.recommend-title {
+  font-size: 24rpx;
+  color: #333;
+}
 </style>

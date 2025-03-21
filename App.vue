@@ -1,4 +1,8 @@
 h<script>
+	if (typeof defineOptions === 'undefined') {
+	  window.defineOptions = options => options;
+	}
+
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -10,6 +14,7 @@ h<script>
 			console.log('App Hide')
 		}
 	}
+	
 </script>
 
 <style lang="scss">

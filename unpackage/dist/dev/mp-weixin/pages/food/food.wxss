@@ -5,35 +5,22 @@
  */
 .u-wrap.data-v-42b55fc6 {
   height: calc(100vh);
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
 }
 .u-search-box.data-v-42b55fc6 {
   padding: 18rpx 30rpx;
 }
 .u-menu-wrap.data-v-42b55fc6 {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
+  flex: 1;
   display: flex;
   overflow: hidden;
 }
 .u-search-inner.data-v-42b55fc6 {
   background-color: #eaeaea;
   border-radius: 100rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   padding: 10rpx 16rpx;
 }
 .u-search-text.data-v-42b55fc6 {
@@ -49,15 +36,9 @@
   height: 110rpx;
   background: #f6f6f6;
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   font-size: 26rpx;
   color: #444;
   font-weight: 400;
@@ -104,27 +85,15 @@
   color: #303133;
 }
 .item-container.data-v-42b55fc6 {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .thumb-box.data-v-42b55fc6 {
   width: 33.333333%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   margin-top: 20rpx;
 }
 .item-menu-image.data-v-42b55fc6 {

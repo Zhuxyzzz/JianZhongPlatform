@@ -4,6 +4,8 @@
     "pages/center/index",
     "pages/food/food",
     "pages/sport/sport",
+    "pages/sport/planPersonalized/planPersonalized",
+    "pages/sport/sportsRecord/sportsRecord",
     "pages/clock/clock",
     "pages/our/our",
     "pages/subject/subject",
@@ -14,9 +16,13 @@
     "pages/center/planHistory/planHistory",
     "pages/waiting_for_restaurant_order/waiting_for_restaurant_order",
     "pages/prescription_label/prescription_label",
+    "pages/prescription_label/prescription_label2",
     "pages/subject-detail/subject-detail",
     "pages/subject-detail/reply",
-    "pages/food-detail/food-detail"
+    "pages/food-detail/food-detail",
+    "pages/center/ManagerAndSuggest",
+    "pages/center/food/foodManage",
+    "components/food-manage/food-manage"
   ],
   "subPackages": [],
   "window": {
@@ -64,6 +70,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

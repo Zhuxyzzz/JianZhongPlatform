@@ -24,15 +24,108 @@
             }
             
         }
+		// 运动 start
         ,{
             "path" : "pages/sport/sport",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "运动分类",
+                "navigationBarTitleText": "运动健康",
                 "enablePullDownRefresh": false
             }
             
-        },
+        }
+		,{
+		    "path" : "pages/sport/planPersonalized/planPersonalized",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "个性化运动推荐",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/sport/sportsRecord/sportsRecord",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "运动数据记录",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/sport/sportsAnalysis/sportsAnalysis",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "运动数据分析",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/sport/exerciseGuide/exerciseGuide",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "运动学习与指导",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/sport/exerciseGuide/detail/detail",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "运动详情页",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/sport/exerciseGuide/liveStreaming/liveRoomList",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "直播列表",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/sport/exerciseGuide/liveStreaming/liveStreaming",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "在线直播",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/sport/community/community",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "社区互动和激励",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/sport/community/comment/comment",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "评论",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		
+		{
+		    "path" : "pages/sport/doctorManagement/doctorManagement",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "医生端运动管理",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		// 运动 end
 		{
             "path" : "pages/clock/clock",
             "style" :                                                                                    

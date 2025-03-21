@@ -7,7 +7,9 @@
     "urlCheck": false,
     "es6": false,
     "postcss": false,
-    "minified": false
+    "minified": false,
+    "newFeature": true,
+    "bigPackageSizeSupport": true
   },
   "compileType": "miniprogram",
   "libVersion": "",
@@ -27,8 +29,15 @@
       "list": []
     },
     "miniprogram": {
-      "current": -1,
-      "list": []
+      "current": 0,
+      "list": [
+        {
+          "id": 0,
+          "name": "pages/sport/sport",
+          "pathName": "pages/sport/sport",
+          "query": ""
+        }
+      ]
     }
   }
 }

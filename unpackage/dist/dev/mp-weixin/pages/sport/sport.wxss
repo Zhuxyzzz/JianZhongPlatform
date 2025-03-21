@@ -3,132 +3,84 @@
  * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
-.u-wrap.data-v-611778b0 {
-  height: calc(100vh);
-  display: -webkit-box;
-  display: -webkit-flex;
+.sport-home-container.data-v-611778b0 {
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
+  background-color: #f5f5f5;
 }
-.u-search-box.data-v-611778b0 {
-  padding: 18rpx 30rpx;
+/* 1. Banner 样式 */
+.banner-swiper.data-v-611778b0 {
+  width: 100%;
+  height: 400rpx;
+  margin-bottom: 10rpx;
 }
-.u-menu-wrap.data-v-611778b0 {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  overflow: hidden;
-}
-.u-search-inner.data-v-611778b0 {
-  background-color: #eaeaea;
-  border-radius: 100rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  padding: 10rpx 16rpx;
-}
-.u-search-text.data-v-611778b0 {
-  font-size: 26rpx;
-  color: #909399;
-  margin-left: 10rpx;
-}
-.u-tab-view.data-v-611778b0 {
-  width: 200rpx;
+.banner-image.data-v-611778b0 {
+  width: 100%;
   height: 100%;
 }
-.u-tab-item.data-v-611778b0 {
-  height: 110rpx;
-  background: #f6f6f6;
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
+/* 2. 中间六个功能入口 */
+.feature-grid.data-v-611778b0 {
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  font-size: 26rpx;
-  color: #444;
-  font-weight: 400;
-  line-height: 1;
-}
-.u-tab-item-active.data-v-611778b0 {
-  position: relative;
-  color: #000;
-  font-size: 30rpx;
-  font-weight: 600;
-  background: #fff;
-}
-.u-tab-item-active.data-v-611778b0::before {
-  content: "";
-  position: absolute;
-  border-left: 4px solid #2979ff;
-  height: 32rpx;
-  left: 0;
-  top: 39rpx;
-}
-.u-tab-view.data-v-611778b0 {
-  height: 100%;
-}
-.right-box.data-v-611778b0 {
-  background-color: #fafafa;
-}
-.page-view.data-v-611778b0 {
-  padding: 16rpx;
-}
-.class-item.data-v-611778b0 {
-  margin-bottom: 30rpx;
+  flex-wrap: wrap;
   background-color: #fff;
-  padding: 16rpx;
-  border-radius: 8rpx;
+  padding: 10rpx;
+  justify-content: space-between;
+  /* 让每个item大约占1/3宽度，一行显示3个 */
 }
-.item-title.data-v-611778b0 {
-  font-size: 26rpx;
-  color: #303133;
-  font-weight: bold;
+.feature-item.data-v-611778b0 {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15rpx;
 }
-.item-menu-name.data-v-611778b0 {
-  font-weight: normal;
+.feature-item.data-v-611778b0:hover {
+  cursor: pointer;
+}
+.feature-icon.data-v-611778b0 {
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 6rpx;
+}
+.feature-text.data-v-611778b0 {
   font-size: 24rpx;
-  color: #303133;
+  color: #333;
 }
-.item-container.data-v-611778b0 {
-  display: -webkit-box;
-  display: -webkit-flex;
+.feature-text.data-v-611778b0:hover {
+  color: aquamarine;
+}
+/* 3. 运动推荐区域 */
+.recommend-section.data-v-611778b0 {
+  margin-top: 10rpx;
+  background-color: #fff;
+  padding: 10rpx;
+}
+.section-title.data-v-611778b0 {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.recommend-list.data-v-611778b0 {
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.thumb-box.data-v-611778b0 {
-  width: 33.333333%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  margin-top: 20rpx;
+.recommend-card.data-v-611778b0 {
+  width: 48%;
+  background-color: #fff;
+  border-radius: 8rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
-.item-menu-image.data-v-611778b0 {
-  width: 120rpx;
-  height: 120rpx;
+.recommend-image.data-v-611778b0 {
+  width: 100%;
+  height: 250rpx;
+}
+.recommend-info.data-v-611778b0 {
+  padding: 8rpx;
+}
+.recommend-title.data-v-611778b0 {
+  font-size: 24rpx;
+  color: #333;
 }
 

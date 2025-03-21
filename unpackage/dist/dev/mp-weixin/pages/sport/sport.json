@@ -1,7 +1,5 @@
 {
-  "navigationBarTitleText": "运动分类",
+  "navigationBarTitleText": "运动健康",
   "enablePullDownRefresh": false,
-  "usingComponents": {
-    "u-search": "/uview-ui/components/u-search/u-search"
-  }
+  "usingComponents": {}
 }

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
+    "echarts": "^5.6.0",
     "express": "^4.21.2",
+    "uni-echarts": "^0.1.5",
     "uview-ui": "^1.8.3"
   },
   "devDependencies": {

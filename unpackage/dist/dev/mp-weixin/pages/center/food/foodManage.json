@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "今日饮食",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "food-manage": "/components/food-manage/food-manage"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "健康管理及建议",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-form": "/uview-ui/components/u-form/u-form",
+    "u-form-item": "/uview-ui/components/u-form-item/u-form-item",
+    "u-calendar": "/uview-ui/components/u-calendar/u-calendar",
+    "u-subsection": "/uview-ui/components/u-subsection/u-subsection"
+  }
+}
