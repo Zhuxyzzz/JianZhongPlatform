@@ -1,8 +1,4 @@
 h<script>
-	if (typeof defineOptions === 'undefined') {
-	  window.defineOptions = options => options;
-	}
-
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
