@@ -23,6 +23,7 @@
 								v-for="(item1, index1) in item.children" 
 								:key="item1.id"
 								:url="'/pages/food-detail/food-detail?id='+item1.id"
+								<!-- :url="/list" -->
 								>
 									<image class="item-menu-image" :src="item1.icon" mode=""></image>
 									<view class="item-menu-name">{{item1.name}}</view>

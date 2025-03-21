@@ -4,14 +4,18 @@ const install = (Vue, vm) => {
 	
 	// 首页内容信息展示
 	vm.$u.api.homeContent = (params = {}) => vm.$u.get('home/content');
+
 	//登录
 	vm.$u.api.login = params => vm.$u.post('member/login',params);
 	//根据分类获取专题
 	vm.$u.api.subjectList = params => vm.$u.get('home/subjectList',params);
+		
 	//以树形结构获取所有运动分类
 	vm.$u.api.getCate = (params = {}) => vm.$u.get('sport/categoryTreeList');
 	//以树形结构获取所有食品分类
-	vm.$u.api.getFoodCate = (params = {}) => vm.$u.get('food/categoryTreeList');
+	// vm.$u.api.getFoodCate = (params = {}) => vm.$u.get('food/categoryTreeList');
+		vm.$u.api.getFoodCate = (params = {}) => vm.$u.get('api/list');
+
 	//获取用户信息
 	vm.$u.api.getInfo = (params = {}) => vm.$u.get('member/info');
 	//获取更多用户信息
