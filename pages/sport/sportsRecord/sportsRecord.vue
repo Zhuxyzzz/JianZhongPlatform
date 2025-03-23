@@ -3,21 +3,21 @@
     <!-- 1. 顶部数据概览 -->
     <view class="summary-section">
       <view class="summary-item">
-        <image class="summary-icon" src="/static/images/icon_steps.png" mode="aspectFit" />
+        <image class="summary-icon" src="../../../static/sports/images/sportsRecord/step.png" mode="aspectFit" />
         <view class="summary-info">
           <text class="summary-value">{{ totalSteps }}</text>
           <text class="summary-label">步数</text>
         </view>
       </view>
       <view class="summary-item">
-        <image class="summary-icon" src="/static/images/icon_distance.png" mode="aspectFit" />
+        <image class="summary-icon" src="../../../static/sports/images/sportsRecord/mile.png" mode="aspectFit" />
         <view class="summary-info">
           <text class="summary-value">{{ totalDistance }}</text>
           <text class="summary-label">公里</text>
         </view>
       </view>
       <view class="summary-item">
-        <image class="summary-icon" src="/static/images/icon_calorie.png" mode="aspectFit" />
+        <image class="summary-icon" src="../../../static/sports/images/sportsRecord/cal.png" mode="aspectFit" />
         <view class="summary-info">
           <text class="summary-value">{{ totalCalories }}</text>
           <text class="summary-label">千卡</text>

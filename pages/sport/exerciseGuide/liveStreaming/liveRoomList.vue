@@ -33,28 +33,28 @@ export default {
           id: 1,
           title: '瑜伽直播课堂',
           description: '专业瑜伽教练在线带课，轻松掌握瑜伽基础。',
-          thumbnail: '/static/images/live1.jpg',
+          thumbnail: '../../../../static/sports/images/planPersonalization/Yoga.jpg',
           viewerCount: 1024
         },
         {
           id: 2,
           title: 'HIIT燃脂训练',
           description: '高强度间歇训练，快速燃脂，适合忙碌的你。',
-          thumbnail: '/static/images/live2.jpg',
+          thumbnail: '../../../../static/sports/images/planPersonalization/HIIT.jpg',
           viewerCount: 876
         },
         {
           id: 3,
           title: '舞蹈健身直播',
           description: '动感舞蹈课堂，边跳边瘦，释放压力。',
-          thumbnail: '/static/images/live3.jpg',
+          thumbnail: '../../../../static/sports/images/exerciseGuide/dance.jpg',
           viewerCount: 654
         },
         {
           id: 4,
           title: '普拉提塑形',
           description: '通过普拉提训练改善体态，提升核心力量。',
-          thumbnail: '/static/images/live4.jpg',
+          thumbnail: '../../../../static/sports/images/exerciseGuide/pilates.jpg',
           viewerCount: 432
         }
       ]

@@ -52,25 +52,50 @@
           </view>
           <!-- 帖子互动按钮 -->
           <view class="post-actions">
+            <!-- 点赞按钮 -->
             <view class="action-item" @tap="toggleLike(post)">
-              <icon :type="post.liked ? 'heart-fill' : 'heart'" :color="post.liked ? '#ff7b54' : '#ccc'" />
+              <!-- 根据 liked 状态，显示不同的心形图标 -->
+              <image 
+                class="icon-image" 
+                :src="post.liked 
+                  ? '../../../static/sports/images/community/heart-fill.png' 
+                  : '../../../static/sports/images/community/heart.png'" 
+                mode="widthFix"
+              />
               <text>{{ post.likeCount }}</text>
             </view>
+          
+            <!-- 评论按钮 -->
             <view class="action-item" @tap="goToComments(post.id)">
-              <icon type="chatbubble" color="#ccc" />
+              <image 
+                class="icon-image" 
+                src="../../../static/sports/images/community/chatbubble.png" 
+                mode="widthFix"
+              />
               <text>{{ post.commentCount }}</text>
             </view>
+          
+            <!-- 分享按钮 -->
             <view class="action-item" @tap="sharePost(post)">
-              <icon type="share" color="#ccc" />
+              <image 
+                class="icon-image" 
+                src="../../../static/sports/images/community/share.png" 
+                mode="widthFix"
+              />
             </view>
           </view>
+
         </view>
       </block>
     </scroll-view>
     
     <!-- 浮动发帖按钮 -->
     <view class="floating-post-btn" @tap="togglePostForm">
-      <icon type="add" size="36" color="#fff" />
+	  <image
+	    style="width: 18px;"
+	    src="../../../static/sports/images/community/add.png" 
+	    mode="widthFix"
+	  />
     </view>
     
     <!-- 发帖表单弹窗 -->
@@ -103,10 +128,10 @@ export default {
         {
           id: 1,
           user: '小明',
-          avatar: '/static/images/avatar1.png',
+          avatar: '../../../static/sports/images/user_avatar.png',
           timestamp: '2025-04-20 10:00',
           content: '今天跑了5公里，状态不错，加油！',
-          images: ['/static/images/post1.jpg'],
+          images: ['../../../static/sports/images/community/post1.png'],
           liked: false,
           likeCount: 10,
           commentCount: 3,
@@ -115,10 +140,10 @@ export default {
         {
           id: 2,
           user: '小红',
-          avatar: '/static/images/avatar2.png',
+          avatar: '../../../static/sports/images/user_avatar2.jpg',
           timestamp: '2025-04-20 09:30',
           content: '分享一下我的健身餐搭配，既美味又健康！',
-          images: ['/static/images/post2.jpg', '/static/images/post3.jpg'],
+          images: ['../../../static/sports/images/community/post2.jpg', '../../../static/sports/images/community/post3.jpg'],
           liked: true,
           likeCount: 25,
           commentCount: 8,
@@ -126,8 +151,8 @@ export default {
         },
         {
           id: 3,
-          user: '小刚',
-          avatar: '/static/images/avatar3.png',
+          user: '小周',
+          avatar: '../../../static/sports/images/user_avatar3.jpg',
           timestamp: '2025-04-19 18:45',
           content: '参加了减脂挑战赛，感觉收获满满！',
           images: [],
@@ -367,6 +392,12 @@ export default {
 .action-item {
   display: flex;
   align-items: center;
+}
+/* 图标图片的样式，可根据需求自定义大小 */
+.icon-image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 5rpx;
 }
 .action-item icon {
   margin-right: 5rpx;

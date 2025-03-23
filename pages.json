@@ -42,6 +42,15 @@
 		        "enablePullDownRefresh": false
 		    }
 		    
+		},
+		{
+		    "path" : "pages/sport/planPersonalized/exercise",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "开始运动",
+		        "enablePullDownRefresh": false
+		    }
+		    
 		}
 		,{
 		    "path" : "pages/sport/sportsRecord/sportsRecord",
@@ -117,10 +126,10 @@
 		},
 		
 		{
-		    "path" : "pages/sport/doctorManagement/doctorManagement",
+		    "path" : "pages/sport/AIpic/AIpic",
 		    "style" :                                                                                    
 		    {
-		        "navigationBarTitleText": "医生端运动管理",
+		        "navigationBarTitleText": "AI减重预览",
 		        "enablePullDownRefresh": false
 		    }
 		    

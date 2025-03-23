@@ -91,9 +91,9 @@ export default {
           link: '/pages/sport/community/community'
         },
         {
-          title: '医生端运动管理',
-          icon: '../../static/sports/icons/icon_doctor.png',
-          link: '/pages/sport/doctorManagement/doctorManagement'
+          title: 'AI减脂预览',
+          icon: '../../static/sports/icons/AIpic.png',
+          link: '/pages/sport/AIpic/AIpic'
         },
       ],
       // 运动推荐列表

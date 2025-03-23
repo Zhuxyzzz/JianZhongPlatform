@@ -66,8 +66,8 @@
     </view>
 
     <!-- 直播入口 -->
-    <view class="live-section" @tap="goLive">
-      <icon type="video" size="36" color="#fff" />
+    <view class="live-section" @tap="goLive" style="height: 55px;">
+	  <image style="width: 35px;" src="../../../static/sports/images/exerciseGuide/liveStream.png" mode="aspectFit" />
       <text class="live-text">立即进入直播课堂</text>
     </view>
   </view>
@@ -88,7 +88,7 @@ export default {
           id: 1,
           title: '全身热身操',
           description: '激活全身肌肉，预防运动损伤。',
-          thumbnail: '/static/images/exercise1.jpg',
+          thumbnail: '../../../static/sports/images/exerciseGuide/warmUp.jpg',
           videoUrl: '', // 如果有视频预览，填写视频链接
           tags: ['初级', '热身'],
           category: '热身'
@@ -97,8 +97,8 @@ export default {
           id: 2,
           title: 'HIIT高强度间歇训练',
           description: '短时高效燃脂，适合时间有限的用户。',
-          thumbnail: '/static/images/exercise2.jpg',
-          videoUrl: 'https://example.com/video2.mp4',
+          thumbnail: '../../../static/sports/images/planPersonalization/HIIT.jpg',
+          videoUrl: '../../../../static/sports/images/exerciseGuide/HIIT.mp4',
           tags: ['高强度', '燃脂'],
           category: '有氧'
         },
@@ -106,7 +106,7 @@ export default {
           id: 3,
           title: '瑜伽基础练习',
           description: '增强柔韧性，缓解压力，适合初学者。',
-          thumbnail: '/static/images/exercise3.jpg',
+          thumbnail: '../../../static/sports/images/planPersonalization/Yoga.jpg',
           videoUrl: '',
           tags: ['初级', '柔韧'],
           category: '柔韧'
@@ -115,7 +115,7 @@ export default {
           id: 4,
           title: '核心力量训练',
           description: '强化核心肌群，改善体态，提升运动表现。',
-          thumbnail: '/static/images/exercise4.jpg',
+          thumbnail: '../../../static/sports/images/exerciseGuide/coreExercise.jpg',
           videoUrl: 'https://example.com/video4.mp4',
           tags: ['力量', '核心'],
           category: '力量训练'
@@ -124,7 +124,7 @@ export default {
           id: 5,
           title: '有氧运动入门',
           description: '循序渐进开启有氧训练。',
-          thumbnail: '/static/images/exercise5.jpg',
+          thumbnail: '../../../static/sports/images/exerciseGuide/aerobicExercise.jpg',
           videoUrl: '',
           tags: ['初级', '有氧'],
           category: '有氧'
@@ -133,7 +133,7 @@ export default {
           id: 6,
           title: '拉伸与放松',
           description: '运动后拉伸，预防肌肉酸痛。',
-          thumbnail: '/static/images/exercise6.jpg',
+          thumbnail: '../../../static/sports/images/exerciseGuide/stretch.jpg',
           videoUrl: '',
           tags: ['拉伸', '放松'],
           category: '拉伸'
@@ -144,17 +144,17 @@ export default {
         {
           id: 2,
           title: 'HIIT高强度间歇训练',
-          thumbnail: '/static/images/exercise2.jpg'
+          thumbnail: '../../../static/sports/images/planPersonalization/HIIT.jpg'
         },
         {
           id: 4,
           title: '核心力量训练',
-          thumbnail: '/static/images/exercise4.jpg'
+          thumbnail: '../../../static/sports/images/exerciseGuide/coreExercise.jpg'
         },
         {
           id: 5,
           title: '有氧运动入门',
-          thumbnail: '/static/images/exercise5.jpg'
+          thumbnail: '../../../static/sports/images/exerciseGuide/aerobicExercise.jpg'
         }
       ]
     }

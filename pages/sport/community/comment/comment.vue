@@ -50,7 +50,7 @@ export default {
       post: {
         id: 1,
         user: '小明',
-        avatar: '/static/images/avatar1.png',
+        avatar: '../../../../static/sports/images/user_avatar.png',
         timestamp: '2025-04-20 10:00',
         content: '今天跑了5公里，状态不错，加油！'
       },

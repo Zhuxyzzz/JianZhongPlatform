@@ -57,7 +57,7 @@
         </view>
         <view class="plan-item-actions">
           <button size="mini" type="default" @tap.stop="removeItem(index)">删除</button>
-          <button size="mini" type="primary" @tap.stop="startExercise(item)">开始</button>
+          <button size="mini" type="primary" @click="startExercise(item)">开始</button>
         </view>
       </view>
     </view>
@@ -83,9 +83,9 @@ export default {
         period: 30, // 减重周期
       },
       intensityModes: [
-        { label: '轻度', value: 'light', icon: '/static/images/icon_light.png' },
-        { label: '中度', value: 'medium', icon: '/static/images/icon_medium.png' },
-        { label: '高强度', value: 'high', icon: '/static/images/icon_high.png' },
+        { label: '轻度', value: 'light', icon: '../../../static/sports/images/planPersonalization/icon_light.png' },
+        { label: '中度', value: 'medium', icon: '../../../static/sports/images/planPersonalization/icon_medium.png' },
+        { label: '高强度', value: 'high', icon: '../../../static/sports/images/planPersonalization/icon_high.png' },
       ],
       selectedIntensity: null,
       planList: [] // 生成的运动计划列表
@@ -122,14 +122,14 @@ export default {
             desc: '以慢跑为主，提升心肺功能', 
             duration: 20, 
             calories: 120, 
-            img: '/static/images/exercise_running.png'
+            img: '../../../static/sports/images/planPersonalization/jogging1.jpg'
           },
           { 
             name: '基础瑜伽', 
             desc: '缓解疲劳，增强柔韧性', 
             duration: 15, 
             calories: 80, 
-            img: '/static/images/exercise_yoga.png'
+            img: '../../../static/sports/images/planPersonalization/Yoga.jpg'
           }
         ],
         medium: [
@@ -138,14 +138,14 @@ export default {
             desc: '中等速度的跑步，锻炼耐力', 
             duration: 30, 
             calories: 220, 
-            img: '/static/images/exercise_running.png'
+            img: '../../../static/sports/images/planPersonalization/jogging2.png'
           },
           { 
             name: '全身燃脂 HIIT', 
             desc: '间歇性训练，提高燃脂效率', 
             duration: 15, 
             calories: 150, 
-            img: '/static/images/banner2.jpg'
+            img: '../../../static/sports/images/planPersonalization/HIIT.jpg'
           }
         ],
         high: [
@@ -154,14 +154,14 @@ export default {
             desc: '跑步速度与休息交替，快速燃脂', 
             duration: 20, 
             calories: 250, 
-            img: '/static/images/exercise_running.png'
+            img: '../../../static/sports/images/planPersonalization/jogging3.png'
           },
           { 
             name: '力量训练（自重）', 
             desc: '俯卧撑、深蹲、平板支撑等', 
             duration: 20, 
             calories: 180, 
-            img: '/static/images/exercise_yoga.png'
+            img: '../../../static/sports/images/recommend2.jpg'
           }
         ]
       };
@@ -181,12 +181,11 @@ export default {
     },
     // 开始运动
     startExercise(item) {
-      // 这里可以跳转到运动详情页或计时页面
-      uni.showToast({
-        title: `开始运动: ${item.name}`,
-        icon: 'none'
+      uni.navigateTo({
+        url: `/pages/sport/planPersonalized/exercise?name=${encodeURIComponent(item.name)}&desc=${encodeURIComponent(item.desc)}&duration=${item.duration}&calories=${item.calories}&img=${encodeURIComponent(item.img)}`
       });
     }
+
   }
 }
 </script>

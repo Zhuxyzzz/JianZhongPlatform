@@ -120,7 +120,7 @@ export default {
           id: 1,
           title: '全身热身操',
           description: '本教程详细讲解了全身热身操的动作要领和注意事项，帮助你预防运动损伤，充分激活全身肌肉。',
-          thumbnail: '/static/images/exercise1.jpg',
+          thumbnail: '../../../../static/sports/images/exerciseGuide/warmUp.jpg',
           videoUrl: '',
           tags: ['初级', '热身'],
           steps: [
@@ -140,7 +140,7 @@ export default {
           title: 'HIIT高强度间歇训练',
           description: '通过高强度间歇训练快速燃脂，适合时间有限的人群，帮助提升心肺功能。',
           thumbnail: '/static/images/exercise2.jpg',
-          videoUrl: 'https://example.com/video2.mp4',
+          videoUrl: '../../../../static/sports/images/exerciseGuide/HIIT.mp4',
           tags: ['高强度', '燃脂'],
           steps: [
             '热身5分钟：慢跑或跳绳。',
