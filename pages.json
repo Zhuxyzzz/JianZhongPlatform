@@ -71,6 +71,11 @@
 		    
 		},
 		{
+		  "usingComponents": {
+		    "uni-echarts": "node_modules/uni-echarts/src/components/uni-echarts/uni-echarts"
+		  }
+		},
+		{
 		    "path" : "pages/sport/exerciseGuide/exerciseGuide",
 		    "style" :                                                                                    
 		    {

@@ -1,5 +1,20 @@
 <template>
   <view class="ai-weightloss-container">
+	  <swiper
+	    class="banner-swiper"
+	    autoplay
+	    interval="3000"
+	    indicator-dots
+	    circular
+	  >
+	    <swiper-item v-for="(item, index) in bannerList" :key="index">
+	      <image
+	        :src="item.img"
+	        class="banner-image"
+	        mode="aspectFill"
+	      />
+	    </swiper-item>
+	  </swiper>
     <!-- 顶部标题 -->
     <view class="header">
       <text class="title">AI 减重预览</text>
@@ -50,6 +65,10 @@
 export default {
   data() {
     return {
+		bannerList: [
+		  { img: '../../../static/sports/images/AIpic/banner1.jpg' },
+		  { img: '../../../static/sports/images/AIpic/banner2.jpg' }
+		],
       originalImage: '', // 用户上传的照片路径
       weightLoss: 0,     // 模拟减重斤数
       resultImage: ''    // AI 处理后的照片路径（预览效果）
@@ -92,7 +111,7 @@ export default {
       // 实际情况可能需要将 originalImage 和 weightLoss 参数传给后端 API
       // 返回处理后的图片，此处使用示例图片作为示例
       if (this.weightLoss > 0) {
-        this.resultImage = '/static/images/ai_weightloss_result.png';
+        this.resultImage = '../../../static/sports/images/AIpic/preview.jpg';
       } else {
         // 若减重为 0，则显示原图
         this.resultImage = this.originalImage;
@@ -103,6 +122,16 @@ export default {
 </script>
 
 <style scoped>
+	/* 1. Banner 样式 */
+	.banner-swiper {
+	  width: 100%;
+	  height: 600rpx;
+	  margin-bottom: 10rpx;
+	}
+	.banner-image {
+	  width: 100%;
+	  height: 100%;
+	}
 .ai-weightloss-container {
   display: flex;
   flex-direction: column;
