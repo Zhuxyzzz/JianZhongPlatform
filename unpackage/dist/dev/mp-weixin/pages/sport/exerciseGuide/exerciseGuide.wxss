@@ -1,0 +1,195 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.exercise-guide-container.data-v-233520f5 {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+/* 搜索栏样式 */
+.header.data-v-233520f5 {
+  background-color: #fff;
+  padding: 20rpx;
+}
+.search-container.data-v-233520f5 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1rpx solid #ddd;
+  border-radius: 30rpx;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+.search-input.data-v-233520f5 {
+  flex: 1;
+  padding: 10rpx 20rpx;
+  font-size: 26rpx;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.search-icon.data-v-233520f5 {
+  padding: 10rpx 20rpx;
+  background-color: #ff7b54;
+  color: #fff;
+}
+/* 分类筛选导航 */
+.category-tabs.data-v-233520f5 {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 10rpx;
+  border-bottom: 1rpx solid #ddd;
+  margin-bottom: 10rpx;
+}
+.category-tab.data-v-233520f5 {
+  padding: 10rpx 20rpx;
+  font-size: 26rpx;
+  color: #666;
+  margin-right: 10rpx;
+  border-radius: 30rpx;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s, color 0.3s;
+}
+.category-tab.active.data-v-233520f5 {
+  background-color: #ff7b54;
+  color: #fff;
+}
+/* 滚动视图：教程列表 */
+.exercise-scroll.data-v-233520f5 {
+  flex: 1;
+  padding: 10rpx;
+}
+/* 卡片式布局 */
+.card.data-v-233520f5 {
+  background-color: #fff;
+  border-radius: 8rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+.image-container.data-v-233520f5 {
+  position: relative;
+}
+.exercise-image.data-v-233520f5 {
+  width: 150rpx;
+  height: 150rpx;
+}
+.play-overlay.data-v-233520f5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150rpx;
+  height: 150rpx;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.exercise-info.data-v-233520f5 {
+  flex: 1;
+  padding: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.exercise-title.data-v-233520f5 {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.exercise-desc.data-v-233520f5 {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+/* 标签样式 */
+.tags.data-v-233520f5 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tag.data-v-233520f5 {
+  background-color: #ff7b54;
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 10rpx;
+  margin-right: 6rpx;
+  margin-bottom: 6rpx;
+}
+/* 热门推荐区域 */
+.recommend-section.data-v-233520f5 {
+  background-color: #fff;
+  padding: 10rpx;
+  margin: 10rpx 0;
+}
+.section-title.data-v-233520f5 {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.recommend-scroll.data-v-233520f5 {
+  display: flex;
+  flex-direction: row;
+}
+.recommend-item.data-v-233520f5 {
+  width: 250rpx;
+  margin-right: 10rpx;
+}
+.recommend-image.data-v-233520f5 {
+  width: 100%;
+  height: 150rpx;
+  border-radius: 8rpx;
+}
+.recommend-title.data-v-233520f5 {
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  margin-top: 10rpx;
+}
+/* 直播入口 */
+.live-section.data-v-233520f5 {
+  background-color: #ff7b54;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.live-text.data-v-233520f5 {
+  font-size: 32rpx;
+  color: #fff;
+  margin-left: 10rpx;
+}

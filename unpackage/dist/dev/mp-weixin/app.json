@@ -5,7 +5,17 @@
     "pages/food/food",
     "pages/sport/sport",
     "pages/sport/planPersonalized/planPersonalized",
+    "pages/sport/planPersonalized/exercise",
     "pages/sport/sportsRecord/sportsRecord",
+    "pages/sport/sportsAnalysis/sportsAnalysis",
+    "pages/sport/exerciseGuide/exerciseGuide",
+    "pages/sport/exerciseGuide/detail/detail",
+    "pages/sport/exerciseGuide/liveStreaming/liveRoomList",
+    "pages/sport/exerciseGuide/liveStreaming/liveStreaming",
+    "pages/sport/community/community",
+    "pages/sport/community/comment/comment",
+    "pages/sport/AIpic/AIpic",
+    "pages/deepseek/deepseek",
     "pages/clock/clock",
     "pages/our/our",
     "pages/subject/subject",
@@ -21,8 +31,7 @@
     "pages/subject-detail/reply",
     "pages/food-detail/food-detail",
     "pages/center/ManagerAndSuggest",
-    "pages/center/food/foodManage",
-    "components/food-manage/food-manage"
+    "pages/center/food/foodManage"
   ],
   "subPackages": [],
   "window": {
