@@ -41,7 +41,7 @@ const install = (Vue, vm) => {
 	//获取用户的计划列表
 	vm.$u.api.getPlanList = () => vm.$u.get('plan/list');
 	//获取用户的饮食
-	vm.$u.api.getPlanFoodList = () => vm.$u.get('planFood/list');
+	vm.$u.api.getPlanFoodList = () => vm.$u.get('api/planFood/list');
 	//修改计划列表中sf数量
 	vm.$u.api.getQuantity = params => vm.$u.get('plan/update/quantity',params);
 	//单条删除
@@ -64,7 +64,10 @@ const install = (Vue, vm) => {
 	vm.$u.api.deletes = params => vm.$u.post('plan/deletes',params);
 	//根据身高体重判断bmi
 	vm.$u.api.manage = params => vm.$u.get('order/manage',params);
-	
+	// 搜索食物
+	vm.$u.api.searchFood = (params) => vm.$u.get('api/food/search', params);
+	// 获取推荐食物
+	vm.$u.api.getRecommendFoods = (params) => vm.$u.post('api/food/recommend', params);
 }
 
 export default {
