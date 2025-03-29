@@ -51,13 +51,16 @@ const install = (Vue, vm) => {
 	
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		//响应状态码
-		const {code,data}=res
-
+		console.log("拦截器收到的响应:", res);
+		// 如果响应直接是数组，说明是有效数据
+		if (Array.isArray(res)) {
+			return res;
+		  }
+		   // 否则按照常规响应格式处理
+		const {code, data, message} = res;
+		
 		if(code == 200) {
-			// res为服务端返回值，可能有code，result等字段
-			// 这里对res.result进行返回，将会在this.$u.post(url).then(res => {})的then回调中的res的到
-			// 如果配置了originalData为true，请留意这里的返回值
+			console.log("返回的数据:", data);
 			return data;
 		}
 		else if(code == 400){
@@ -80,8 +83,8 @@ const install = (Vue, vm) => {
 			}, 1500)
 			return false;
 		} else {
-			// 如果返回false，则会调用Promise的reject回调，
-			// 并将进入this.$u.post(url).then().catch(res=>{})的catch回调中，res为服务端的返回值
+			console.error("请求失败:", {code, message});
+			vm.$u.toast(message || '请求失败');
 			return false;
 		}
 	}
