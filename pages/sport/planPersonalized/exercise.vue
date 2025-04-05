@@ -1,29 +1,70 @@
 <template>
   <view class="exercise-container">
-    <!-- 1. 运动项目信息展示 -->
+    <!-- 1. 运动项目信息 -->
     <view class="exercise-header">
-      <image :src="exercise.img" class="exercise-image" mode="aspectFill"></image>
+      <image :src="exercise.img" class="exercise-image" mode="aspectFill" />
       <text class="exercise-title">{{ exercise.name }}</text>
       <text class="exercise-desc">{{ exercise.desc }}</text>
     </view>
 
-    <!-- 2. 计时器展示 -->
-    <view class="timer-section">
-      <!-- 倒计时状态下显示倒计时数字 -->
-      <text v-if="isCountdown" class="timer-display">倒计时：{{ countdown }}</text>
-      <!-- 运动进行时显示运动计时 -->
-      <text v-else class="timer-display">{{ timerDisplay }}</text>
-      <!-- 控制按钮 -->
-      <view class="control-buttons">
-        <!-- 运动未开始时，显示“开始运动” -->
-        <button v-if="!isCountdown && !isRunning" @tap="startCountdown">开始运动</button>
-        <!-- 运动进行中显示重置和结束按钮 -->
-        <button v-if="isRunning" @tap="resetTimer">重置运动</button>
-        <button v-if="isRunning" @tap="endExercise('手动结束')">结束运动</button>
+    <!-- 2. 多段运动展示 -->
+    <view class="segments-section">
+      <text class="section-title">分段列表</text>
+      <!-- v-for 展示每一个段落 -->
+      <view 
+        class="segment-item" 
+        v-for="(seg, idx) in segments" 
+        :key="idx"
+      >
+        <view class="segment-header">
+          <text>第 {{ idx + 1 }} 段：{{ seg.name }}</text>
+          <!-- 显示剩余时间 mm:ss -->
+          <text>剩余: {{ formatTime(seg.remainingSeconds) }}</text>
+        </view>
+
+        <!-- 按钮组：根据不同状态呈现不同按钮 -->
+        <view class="segment-controls">
+          <!-- 如果已完成，则显示“已完成” -->
+          <text v-if="seg.isCompleted" class="segment-completed">
+            已完成
+          </text>
+          <!-- 否则，根据 isRunning / isPaused 显示不同按钮 -->
+          <view v-else>
+            <!-- “开始”按钮：仅当上一段已完成、本段未开始时可用 -->
+            <button 
+              v-if="!seg.isRunning && !seg.isPaused" 
+              :disabled="!canStartSegment(idx)" 
+              @tap="startSegment(idx)"
+            >
+              开始
+            </button>
+            <!-- “暂停”按钮：当段正在运行时显示 -->
+            <button 
+              v-if="seg.isRunning" 
+              @tap="pauseSegment(idx)"
+            >
+              暂停
+            </button>
+            <!-- “继续”按钮：当段已暂停时显示 -->
+            <button 
+              v-if="seg.isPaused" 
+              @tap="resumeSegment(idx)"
+            >
+              继续
+            </button>
+            <!-- “结束”按钮：可随时手动结束当前段 -->
+            <button 
+              v-if="seg.isRunning || seg.isPaused" 
+              @tap="stopSegment(idx, '手动结束')"
+            >
+              结束
+            </button>
+          </view>
+        </view>
       </view>
     </view>
 
-    <!-- 3. 运动信息展示 -->
+    <!-- 3. 总运动信息(仅作展示，可保留原先逻辑) -->
     <view class="exercise-info">
       <text>总时长: {{ exercise.duration }} 分钟</text>
       <text>预计消耗: {{ exercise.calories }} kcal</text>
@@ -35,8 +76,14 @@
       <view v-if="records.length === 0" class="no-records">
         <text>暂无记录</text>
       </view>
-      <view v-for="(record, index) in records" :key="record.id" class="record-item">
-        <text>{{ record.timestamp }} - {{ record.name }} - 时长: {{ record.duration }} 秒 - {{ record.reason }}</text>
+      <view 
+        v-for="(record, index) in records" 
+        :key="record.id" 
+        class="record-item"
+      >
+        <text>
+          {{ record.timestamp }} - {{ record.segName }} - 耗时: {{ record.usedSeconds }} 秒 - {{ record.reason }}
+        </text>
         <button @tap="deleteRecord(index)">删除</button>
       </view>
     </view>
@@ -50,115 +97,189 @@ export default {
       exercise: {
         name: '',
         desc: '',
-        duration: 0,  // 运动时长，单位：分钟
+        duration: 0,  // 总时长（分钟），仅作展示
         calories: 0,
         img: ''
       },
-      timer: null,         // 运动计时器引用
-      remainingTime: 0,    // 剩余运动时间（秒）
-      isRunning: false,    // 是否处于运动计时中
-      countdown: 3,        // 三秒倒计时的计数器
-      isCountdown: false,  // 是否正在倒计时
-      records: []          // 运动记录列表
-    }
-  },
-  computed: {
-    // 将剩余秒数格式化为 MM:SS 格式
-    timerDisplay() {
-      const minutes = Math.floor(this.remainingTime / 60);
-      const seconds = this.remainingTime % 60;
-      return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+      // 多段解析后的数组
+      segments: [
+        // {
+        //   name: "热身",
+        //   totalSeconds: 300,
+        //   remainingSeconds: 300,
+        //   isRunning: false,
+        //   isPaused: false,
+        //   isCompleted: false,
+        //   timer: null
+        // }
+      ],
+      // 记录列表
+      records: []
     }
   },
   onLoad(options) {
-    // 从 URL 参数中获取运动项目信息
+    // 1. 获取URL参数
     this.exercise.name = options.name || '运动项目';
     this.exercise.desc = options.desc || '运动描述';
     this.exercise.duration = parseInt(options.duration) || 0;
     this.exercise.calories = parseInt(options.calories) || 0;
     this.exercise.img = decodeURIComponent(options.img) || '';
-    // 将运动时长转换为秒，作为计时器初始时间
-    this.remainingTime = this.exercise.duration * 60;
+
+    // 2. 解析 desc -> segments
+    // 示例: "5分钟热身 + 15分钟快走 + 10分钟拉伸 = 30分钟"
+    this.segments = this.parseSegments(this.exercise.desc);
   },
   methods: {
-    // 开始三秒倒计时，倒计时结束后启动运动计时器
-    startCountdown() {
-      if (this.isCountdown || this.isRunning) return;
-      this.isCountdown = true;
-      this.countdown = 3;
-      const countdownTimer = setInterval(() => {
-        if (this.countdown > 1) {
-          this.countdown--;
+    // A. 解析desc，生成 segments 数组
+    parseSegments(descText) {
+      // 先去掉 "= xx分钟"部分(若有)
+      let mainPart = descText.split('=')[0].trim(); 
+      // e.g. "5分钟热身 + 15分钟快走 + 10分钟拉伸"
+
+      // 再按 "+" 分割
+      let partArr = mainPart.split('+').map(p => p.trim());
+      // ["5分钟热身", "15分钟快走", "10分钟拉伸"]
+
+      let result = [];
+      partArr.forEach(item => {
+        // 匹配: 数字 + "分钟" + 剩下的文本
+        let match = item.match(/(\d+)分钟(.*)/);
+        if (match) {
+          let minVal = parseInt(match[1]);        // 5, 15, 10
+          let segName = match[2].trim();          // '热身', '快走', '拉伸'
+          let totalSec = minVal * 60;
+          result.push({
+            name: segName || '运动',
+            totalSeconds: totalSec,
+            remainingSeconds: totalSec,
+            isRunning: false,
+            isPaused: false,
+            isCompleted: false,
+            timer: null
+          });
+        }
+      });
+
+      return result;
+    },
+
+    // B. 辅助: 格式化秒数 => "MM:SS"
+    formatTime(sec) {
+      let m = Math.floor(sec / 60);
+      let s = sec % 60;
+      return `${m}:${s < 10 ? '0' + s : s}`;
+    },
+
+    // C. 判断是否可以开始某段
+    //   - 如果是第1段(index=0)，可以直接开始
+    //   - 如果是后续段，则必须上一个段 isCompleted=true
+    canStartSegment(index) {
+      if (index === 0) return true; 
+      // 只有当前一段完成了，才可开始本段
+      return this.segments[index - 1].isCompleted;
+    },
+
+    // D. 开始某一段
+    startSegment(index) {
+      let seg = this.segments[index];
+      // 若已完成就不重复开始
+      if (seg.isCompleted) return;
+
+      // 若还有剩余时间则启动计时器
+      seg.isRunning = true;
+      seg.isPaused = false;
+      seg.timer = setInterval(() => {
+        if (seg.remainingSeconds > 0) {
+          seg.remainingSeconds--;
         } else {
-          clearInterval(countdownTimer);
-          this.isCountdown = false;
-          this.startExerciseTimer();
+          // 到0 => 结束该段
+          this.stopSegment(index, '自动完成');
         }
       }, 1000);
     },
-    // 开始运动计时器
-    startExerciseTimer() {
-      if (this.remainingTime <= 0) return;
-      this.isRunning = true;
-      this.timer = setInterval(() => {
-        if (this.remainingTime > 0) {
-          this.remainingTime--;
-        } else {
-          // 计时结束后自动结束运动
-          this.endExercise('完成运动');
-        }
-      }, 1000);
-    },
-    // 清除计时器并更新状态
-    stopTimer() {
-      if (this.timer) {
-        clearInterval(this.timer);
-        this.timer = null;
+
+    // E. 暂停某段
+    pauseSegment(index) {
+      let seg = this.segments[index];
+      if (seg.isRunning) {
+        // 停止计时器
+        clearInterval(seg.timer);
+        seg.timer = null;
+        seg.isRunning = false;
+        seg.isPaused = true;
       }
-      this.isRunning = false;
     },
-    // 重置运动计时器
-    resetTimer() {
-      this.stopTimer();
-      this.remainingTime = this.exercise.duration * 60;
-      uni.showToast({
-        title: '运动已重置',
-        icon: 'none'
+
+    // F. 继续某段
+    resumeSegment(index) {
+      let seg = this.segments[index];
+      if (seg.isPaused && !seg.isCompleted) {
+        seg.isRunning = true;
+        seg.isPaused = false;
+        seg.timer = setInterval(() => {
+          if (seg.remainingSeconds > 0) {
+            seg.remainingSeconds--;
+          } else {
+            this.stopSegment(index, '自动完成');
+          }
+        }, 1000);
+      }
+    },
+
+    // G. 结束(或完成)某段
+    stopSegment(index, reason = '结束') {
+      let seg = this.segments[index];
+      // 先清除计时器
+      if (seg.timer) {
+        clearInterval(seg.timer);
+        seg.timer = null;
+      }
+
+      // 计算耗时
+      const usedSec = seg.totalSeconds - seg.remainingSeconds;
+
+      // 标记完成
+      seg.isRunning = false;
+      seg.isPaused = false;
+      seg.isCompleted = true;
+      seg.remainingSeconds = 0;
+
+      // 记录到 records
+      this.addRecord(seg.name, usedSec, reason);
+
+      // 提示
+      uni.showToast({ 
+        title: `第${index+1}段「${seg.name}」${reason}`, 
+        icon: 'none' 
       });
     },
-    // 结束运动并记录本次运动情况
-    endExercise(reason = '结束运动') {
-      this.stopTimer();
-      const exercisedTime = this.exercise.duration * 60 - this.remainingTime;
-      const record = {
+
+    // H. 给 records 添加一条记录
+    addRecord(segName, usedSeconds, reason) {
+      let record = {
         id: new Date().getTime(),
-        name: this.exercise.name,
+        segName: segName,
+        usedSeconds: usedSeconds,
         reason: reason,
-        duration: exercisedTime, // 运动时长（秒）
         timestamp: new Date().toLocaleString()
       };
       this.records.push(record);
-      // 重置剩余时间为初始值，方便下次运动
-      this.remainingTime = this.exercise.duration * 60;
-      uni.showToast({
-        title: '运动已结束',
-        icon: 'none'
-      });
     },
-    // 删除某条运动记录
-    deleteRecord(index) {
-      this.records.splice(index, 1);
-      uni.showToast({
-        title: '记录已删除',
-        icon: 'none'
-      });
+
+    // I. 删除记录
+    deleteRecord(idx) {
+      this.records.splice(idx, 1);
+      uni.showToast({ title: '记录已删除', icon: 'none' });
     }
   },
+
+  // J. 页面卸载前，清除所有计时器
   onUnload() {
-    // 页面卸载时清除计时器
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
+    this.segments.forEach(seg => {
+      if (seg.timer) {
+        clearInterval(seg.timer);
+      }
+    });
   }
 }
 </script>
@@ -196,24 +317,37 @@ export default {
   margin-bottom: 20rpx;
 }
 
-/* 计时器 */
-.timer-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 分段列表 */
+.segments-section {
+  background-color: #fff;
+  padding: 10rpx;
+  border-radius: 8rpx;
   margin-bottom: 20rpx;
 }
-.timer-display {
-  font-size: 48rpx;
+.section-title {
+  font-size: 28rpx;
   font-weight: bold;
   margin-bottom: 10rpx;
 }
-.control-buttons {
+.segment-item {
+  border-bottom: 1rpx solid #f0f0f0;
+  padding: 10rpx 0;
+}
+.segment-item:last-child {
+  border-bottom: none;
+}
+.segment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5rpx;
+}
+.segment-controls {
   display: flex;
   flex-direction: row;
+  gap: 10rpx;
 }
-.control-buttons button {
-  margin: 0 10rpx;
+.segment-completed {
+  color: green;
 }
 
 /* 运动信息 */
@@ -225,16 +359,11 @@ export default {
   margin-bottom: 20rpx;
 }
 
-/* 记录列表 */
+/* 运动记录 */
 .record-section {
   background-color: #fff;
   padding: 10rpx;
   border-radius: 8rpx;
-}
-.section-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  margin-bottom: 10rpx;
 }
 .no-records {
   text-align: center;

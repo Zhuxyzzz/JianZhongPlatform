@@ -1,4 +1,4 @@
-<template> 
+<template>
   <view class="plan-personalized-container">
     <!-- 1. 顶部信息概览 -->
     <view class="user-info-section">
@@ -40,6 +40,11 @@
         <text>暂无训练计划，请先选择运动强度并点击生成计划</text>
       </view>
     </view>
+
+    <!-- 3.1 显示大模型返回的 planSummary -->
+    <view v-if="planSummary" class="plan-summary-section">
+      <text class="plan-summary-text">{{ planSummary }}</text>
+    </view>
     
     <!-- 4. 日历 -->
     <view class="calendar-section" v-if="dailyPlanList.length > 0">
@@ -68,9 +73,13 @@
     <view class="daily-plan-section" v-if="selectedDayPlan">
       <text class="section-title">训练计划详情 ({{ selectedDate }})</text>
       <view class="plan-item">
-        <image :src="selectedDayPlan.plan.img" class="plan-item-image" mode="aspectFill" />
+        <image 
+          :src="selectedDayPlan.plan.img || '../../../static/sports/images/planPersonalization/default.jpg'"
+          class="plan-item-image" 
+          mode="aspectFill" 
+        />
         <view class="plan-item-info">
-          <text class="plan-item-title">{{ selectedDayPlan.plan.name }}</text>
+          <text class="plan-item-title">{{ selectedDayPlan.plan.name }}</text></br>
           <text class="plan-item-desc">{{ selectedDayPlan.plan.desc }}</text>
           <view class="plan-item-meta">
             <text>时长: {{ selectedDayPlan.plan.duration }} 分钟</text>
@@ -79,7 +88,14 @@
         </view>
         <view class="plan-item-actions">
           <!-- 若未完成则显示开始按钮，否则显示已完成 -->
-          <button v-if="!selectedDayPlan.plan.completed" size="mini" type="primary" @tap="startExercise(selectedDayPlan)">开始</button>
+          <button 
+            v-if="!selectedDayPlan.plan.completed" 
+            size="mini" 
+            type="primary" 
+            @tap="startExercise(selectedDayPlan)"
+          >
+            开始
+          </button>
           <text v-else class="completed-text">已完成</text>
         </view>
       </view>
@@ -91,7 +107,9 @@
     
     <!-- 6. 提示与说明 -->
     <view class="note-section">
-      <text class="note-text">提示：请根据自身身体状况与医生建议选择合适的运动强度。若感到不适，请立即停止并寻求医生帮助。</text>
+      <text class="note-text">
+        提示：请根据自身身体状况与医生建议选择合适的运动强度。若感到不适，请立即停止并寻求医生帮助。
+      </text>
     </view>
   </view>
 </template>
@@ -114,8 +132,9 @@ export default {
         { label: '高强度', value: 'high', icon: '../../../static/sports/images/planPersonalization/icon_high.png' }
       ],
       selectedIntensity: null,
-      dailyPlanList: [], // 每天的训练计划列表
-      selectedDate: ''   // 当前选中的日期，格式 YYYY-MM-DD
+      dailyPlanList: [],      // 每天的训练计划列表
+      selectedDate: '',       // 当前选中的日期，格式 YYYY-MM-DD
+      planSummary: ''         // 大模型返回的训练概览
     }
   },
   computed: {
@@ -134,7 +153,7 @@ export default {
     selectIntensity(val) {
       this.selectedIntensity = val;
     },
-    // 格式化日期为 YYYY-MM-DD 格式
+    // 格式化日期为 YYYY-MM-DD
     formatDate(date) {
       const d = new Date(date);
       const year = d.getFullYear();
@@ -142,147 +161,189 @@ export default {
       const day = ('0' + d.getDate()).slice(-2);
       return `${year}-${month}-${day}`;
     },
-    // 将 "YYYY-MM-DD" 格式转为 "YYYY年MM月DD日" 显示
+    // 将 "YYYY-MM-DD" 格式转为 "YYYY年MM月DD日"
     formatCalendarDate(dateStr) {
       const parts = dateStr.split('-');
       return `${parts[0]}年${parts[1]}月${parts[2]}日`;
     },
-    // 生成/更新训练计划（每日计划）
-    generatePlan() {
+
+    // 核心: 调用大模型接口并生成/更新训练计划
+    async generatePlan() {
       if (!this.selectedIntensity) {
-        uni.showToast({
-          title: '请先选择运动强度',
-          icon: 'none'
-        });
+        uni.showToast({ title: '请先选择运动强度', icon: 'none' });
         return;
       }
-      // 定义不同运动强度下的每日训练模板
-      const dailyTemplates = {
-        light: [
-          { 
-            name: '体能恢复', 
-            desc: '低强度恢复体能，适合刚开始训练', 
-            duration: 20, 
-            calories: 100, 
-            img: '../../../static/sports/images/planPersonalization/recovery.jpg'
-          },
-          { 
-            name: '强化核心', 
-            desc: '针对核心肌群的低强度训练', 
-            duration: 25, 
-            calories: 120, 
-            img: '../../../static/sports/images/planPersonalization/core.jpg'
-          },
-          { 
-            name: '放松身体', 
-            desc: '舒缓肌肉，进行拉伸放松', 
-            duration: 15, 
-            calories: 80, 
-            img: '../../../static/sports/images/planPersonalization/relax.jpg'
-          },
-          { 
-            name: '轻松跑', 
-            desc: '轻松跑步，促进血液循环', 
-            duration: 20, 
-            calories: 110, 
-            img: '../../../static/sports/images/planPersonalization/jogging.jpg'
-          }
-        ],
-        medium: [
-          { 
-            name: '体能恢复', 
-            desc: '中等强度恢复体能训练', 
-            duration: 25, 
-            calories: 120, 
-            img: '../../../static/sports/images/planPersonalization/recovery.jpg'
-          },
-          { 
-            name: '强化核心', 
-            desc: '针对核心的中等强度训练', 
-            duration: 30, 
-            calories: 150, 
-            img: '../../../static/sports/images/planPersonalization/core.jpg'
-          },
-          { 
-            name: '放松身体', 
-            desc: '中等强度放松拉伸', 
-            duration: 20, 
-            calories: 90, 
-            img: '../../../static/sports/images/planPersonalization/relax.jpg'
-          },
-          { 
-            name: '轻松跑', 
-            desc: '轻松跑步，提升耐力', 
-            duration: 25, 
-            calories: 130, 
-            img: '../../../static/sports/images/planPersonalization/jogging.jpg'
-          }
-        ],
-        high: [
-          { 
-            name: '体能恢复', 
-            desc: '高强度体能恢复训练', 
-            duration: 30, 
-            calories: 150, 
-            img: '../../../static/sports/images/planPersonalization/recovery.jpg'
-          },
-          { 
-            name: '强化核心', 
-            desc: '高强度核心训练，挑战极限', 
-            duration: 35, 
-            calories: 180, 
-            img: '../../../static/sports/images/planPersonalization/core.jpg'
-          },
-          { 
-            name: '放松身体', 
-            desc: '高强度后适当放松，避免拉伤', 
-            duration: 25, 
-            calories: 100, 
-            img: '../../../static/sports/images/planPersonalization/relax.jpg'
-          },
-          { 
-            name: '轻松跑', 
-            desc: '高强度下轻松跑，平衡训练', 
-            duration: 30, 
-            calories: 140, 
-            img: '../../../static/sports/images/planPersonalization/jogging.jpg'
-          }
-        ]
+	   // 在发起请求前，显示加载提示
+	        uni.showLoading({
+	          title: '正在生成，请稍候...'
+	        });
+
+      // 1) 构造“今天”的日期作为起始
+      const startDateObj = new Date();
+      const startDateStr = this.formatDate(startDateObj);
+
+      // 2) 需要的变量(你可改由 userInfo 等取得)
+      const period = 1;        // 这次示例：10 天
+      const weightToLose = 10;  // 要减10斤
+      const selectedIntensity = this.selectedIntensity; // 'light' / 'medium' / 'high'
+
+      // 3) 准备 systemMessage + userMessage，保证替换完成
+
+      // 使用字符串插值替换那些 \${period} / \${weightToLose} / \${startDate} / \${selectedIntensity}
+      // 让大模型拿到的Prompt就已经带着具体数值
+      const userMessage = `
+	  你是一个AI锻炼助手，旨在帮助和指导创建健身/减脂训练计划，并协助寻找适合身体每个肌肉群的锻炼。你拥有私人教练和身体物理学的教育背景，你的角色是增强用户的锻炼效果。
+	  
+	  你的能力包括：
+	  个性化锻炼计划：创建定制的锻炼计划，以满足个人的健身目标、水平和偏好。
+	  肌肉群目标：协助寻找和推荐适合身体特定肌肉群的锻炼。
+	  运动建议：为每个肌肉群提供多种锻炼，包括变体，以保持锻炼的趣味性和有效性。
+	  姿势和技巧指导：提供正确姿势和技巧建议，以确保安全有效地进行锻炼。
+	  进度跟踪：帮助用户跟踪他们的进展，包括重量、重复次数、组数和健身水平改善。
+	  激励与鼓励：提供激励技巧和鼓励，帮助用户坚持他们的健身目标。
+	  营养建议：提供一般的营养建议，以补充锻炼计划，增强整体健身和健康。
+	  休息和恢复指导：提供关于适当休息和恢复技术的建议，以避免过度训练并提高表现。
+我现在想在 ${period} 天内减掉 ${weightToLose} 斤体重，当前用户选择的训练强度是 "${selectedIntensity}"。
+今天的日期是 ${startDateStr}，这是第1天，后面依次加1天直到第 ${period} 天。
+
+请严格按照以下 JSON 结构返回，不要包含代码块或额外文字：
+
+{
+  "planSummary": "在这里概括本次 ${period} 天减掉 ${weightToLose} 斤，并采用 ${selectedIntensity} 强度的核心思路，可含简要饮食建议等",
+  "dailyPlans": [
+    {
+      "dayIndex": 1,
+      "date": "${startDateStr}",
+      "planName": "建议的训练名称，例如 '轻度有氧跑'",
+      "planDescription": "以 子项目时长相加=总计 的格式描述，如 '5分钟热身 + 15分钟慢跑 + 10分钟拉伸 = 30分钟'",
+      "duration": 30,
+      "calories": 200
+    },
+    {
+      "dayIndex": 2,
+      "date": "${startDateStr}+1天",
+      "planName": "...",
+      "planDescription": "...",
+      "duration": 25,
+      "calories": 180
+    }
+    // 一直到 dayIndex = ${period}
+  ]
+}
+
+若无法满足此JSON格式，请返回空JSON {}。
+`.trim();
+
+
+      // 4) 设置fetch的请求参数
+      const options = {
+        method: 'POST',
+        headers: {
+          // TODO: 替换成你的真实token
+          Authorization: 'Bearer sk-tsavetzpzgrhbnuerzsnbbydpsrhyoryvttbhkoqaujzavli',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: "Pro/deepseek-ai/DeepSeek-V3",
+          messages: [
+            { role: "user", content: userMessage }
+          ],
+          stream: false,
+          max_tokens: 512,
+          temperature: 0.7,
+          top_p: 0.7,
+          top_k: 50,
+          frequency_penalty: 0.5,
+          n: 1,
+          response_format: { type: "text" },
+          tools: [
+            {
+              type: "function",
+              function: {
+                description: "<string>",
+                name: "<string>",
+                parameters: {},
+                strict: false
+              }
+            }
+          ]
+        })
       };
-      
-      // 以当前日期为计划开始日期
-      const startDate = new Date();
-      const period = this.userInfo.period;
-      this.dailyPlanList = [];
-      
-      // 根据选定运动强度的模板生成每天的计划（模板循环使用）
-      const template = dailyTemplates[this.selectedIntensity];
-      for (let i = 0; i < period; i++) {
-        const currentDate = new Date(startDate);
-        currentDate.setDate(startDate.getDate() + i);
-        const formattedDate = this.formatDate(currentDate);
-        const templateIndex = i % template.length;
-        // 克隆模板数据并添加 completed 状态
-        const planItem = Object.assign({}, template[templateIndex], { completed: false });
-        this.dailyPlanList.push({
-          date: formattedDate,
-          plan: planItem
-        });
+
+      let responseData = null;
+      try {
+        // 5) 发起请求
+        const res = await fetch("https://api.siliconflow.cn/v1/chat/completions", options);
+        const jsonRes = await res.json();
+		console.log(jsonRes)
+
+        // 可能大模型的JSON在 jsonRes.choices[0].message.content
+        if (!jsonRes.choices || !jsonRes.choices[0] || !jsonRes.choices[0].message) {
+          throw new Error("大模型未返回有效信息");
+        }
+        responseData = jsonRes.choices[0].message.content;
+      } catch (err) {
+        console.error("接口请求或返回出错：", err);
+        uni.showToast({ title: '请求或返回失败', icon: 'none' });
+        return;
       }
-      
-      // 默认选中第一天
-      this.selectedDate = this.dailyPlanList[0].date;
-      
+
+      // 6) 清理掉三引号 ```json 等，防止 JSON.parse 失败
+      // 有些模型会加 ```json ... ```
+      const cleanedResponse = responseData
+        .replace(/```json/g, "")  // 去掉 ```json
+        .replace(/```/g, "")      // 去掉 ```
+        .trim();
+
+      // 7) 尝试解析
+      let planObj = {};
+      try {
+        planObj = JSON.parse(cleanedResponse);
+      } catch (e) {
+        console.error("JSON parse error:", e, "原始字符串 =", cleanedResponse);
+        uni.showToast({ title: '解析计划失败', icon: 'none' });
+        return;
+      }
+
+      // 容错：如果大模型输出 {}
+      if (!planObj.dailyPlans || !Array.isArray(planObj.dailyPlans)) {
+        uni.showToast({ title: '返回的计划数据不符合预期', icon: 'none' });
+        return;
+      }
+
+      // 8) 映射到前端的 data
+      // - planSummary
+      this.planSummary = planObj.planSummary || '';
+      // - dailyPlans
+      this.dailyPlanList = planObj.dailyPlans.map(item => {
+        return {
+          date: item.date,
+          plan: {
+            name: item.planName,
+            desc: item.planDescription,
+            duration: item.duration,
+            calories: item.calories,
+            completed: false
+          }
+        }
+      });
+
+      // 默认选中第1天
+      if (this.dailyPlanList.length > 0) {
+        this.selectedDate = this.dailyPlanList[0].date;
+      }
+
       uni.showToast({
         title: '已生成训练计划',
         icon: 'none'
       });
     },
+
     // 点击日历选择日期
     selectDate(date) {
       this.selectedDate = date;
     },
-    // 判断某一天的训练是否完成（本示例每天仅一项计划）
+    // 判断某一天的训练是否完成
     isDayCompleted(day) {
       return day.plan.completed;
     },
@@ -291,17 +352,15 @@ export default {
       const day = this.dailyPlanList.find(item => item.date === this.selectedDate);
       if (day) {
         day.plan.completed = true;
-        uni.showToast({
-          title: '该日训练已完成',
-          icon: 'none'
-        });
+        uni.showToast({ title: '该日训练已完成', icon: 'none' });
       }
     },
-    // 开始训练（可跳转到具体训练页面，完成后调用 markCompleted 标记完成）
+    // 跳转到运动页面
     startExercise(dayPlan) {
-      uni.navigateTo({
-        url: `/pages/sport/planPersonalized/exercise?date=${dayPlan.date}&name=${encodeURIComponent(dayPlan.plan.name)}&desc=${encodeURIComponent(dayPlan.plan.desc)}&duration=${dayPlan.plan.duration}&calories=${dayPlan.plan.calories}&img=${encodeURIComponent(dayPlan.plan.img)}`
-      });
+      const url = `/pages/sport/planPersonalized/exercise?date=${dayPlan.date}&name=${encodeURIComponent(dayPlan.plan.name)}&desc=${encodeURIComponent(dayPlan.plan.desc)}&duration=${dayPlan.plan.duration}&calories=${dayPlan.plan.calories}&img=${encodeURIComponent(dayPlan.plan.img)}`;
+        uni.navigateTo({
+          url
+        });
     }
   }
 }
@@ -410,6 +469,19 @@ export default {
   padding: 20rpx 0;
 }
 
+/* planSummary显示 */
+.plan-summary-section {
+  margin: 10rpx 0;
+  padding: 10rpx;
+  background-color: #fff;
+  border-radius: 8rpx;
+}
+.plan-summary-text {
+  font-size: 24rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
 /* 日历样式 */
 .calendar-section {
   background-color: #fff;
@@ -445,16 +517,6 @@ export default {
 .incomplete-indicator {
   font-size: 20rpx;
   color: red;
-}
-
-/* 训练计划开始与结束标识 */
-.start-day {
-  background-color: green !important;
-  color: #fff;
-}
-.end-day {
-  background-color: red !important;
-  color: #fff;
 }
 
 /* 当天训练计划详情 */
