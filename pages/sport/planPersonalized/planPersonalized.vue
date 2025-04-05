@@ -240,7 +240,7 @@ export default {
         method: 'POST',
         headers: {
           // TODO: 替换成你的真实token
-          Authorization: 'Bearer sk-tsavetzpzgrhbnuerzsnbbydpsrhyoryvttbhkoqaujzavli',
+          Authorization: 'Bearer ',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
