@@ -218,6 +218,158 @@
 				<text>已记录 {{todayRecords.length}} 餐</text>
 				<text>总热量: {{totalCalories}} 千卡</text>
 			</view>
+					<view class="toggle-icon">
+								<u-icon :name="showDetails ? 'arrow-up' : 'arrow-down'" size="24"></u-icon>
+							</view>
+						</view>
+						
+						<!-- 每餐详细列表 -->
+						<view class="meal-details" v-if="showDetails && todayRecords.length > 0">
+							<view class="meal-item" v-for="(record, index) in todayRecords" :key="index">
+								<view class="meal-header" @click="toggleMealDetail(index)">
+									<view class="meal-info">
+										<text class="meal-time">{{record.date || '未设置时间'}}</text>
+										<text class="meal-type">{{record.meal_type}}餐</text>
+									</view>
+									<view class="meal-right">
+										<text class="meal-calories">{{record.calories * record.sum}}千卡</text>
+										<u-icon :name="expandedMeals[index] ? 'arrow-up' : 'arrow-down'" size="20"></u-icon>
+									</view>
+								</view>
+								<view class="meal-content" v-show="expandedMeals[index]">
+									<view class="food-detail">
+										<text class="food-name">{{record.food_name}}</text>
+										<text class="food-quantity">{{record.sum}}份</text>
+										<text class="food-category">{{ record.category }}</text> 
+									</view>
+									<view class="food-nutrition">
+										<text>蛋白质: {{record.protein}}g</text>
+										<text>脂肪: {{record.fat}}g</text>
+									</view>
+								</view>
+							</view>
+						</view>
+						
+						<!-- 添加餐食按钮 -->
+						<view class="add-meal" @click="showAddMealPopup">
+							<u-icon name="plus" size="24" color="#2979ff"></u-icon>
+							<text>添加餐食</text>
+						</view>
+					</view>
+			
+					<!-- 添加餐食弹窗 -->
+					<u-popup v-model="showAddMeal" mode="center" width="80%" :round="10">
+						<view class="add-meal-popup">
+							<view class="popup-header">
+								<text class="popup-title">添加餐食</text>
+								<u-icon name="close" size="24" @click="showAddMeal = false"></u-icon>
+							</view>
+							<view class="popup-content">
+								<!-- 新增拍照识别入口 -->  
+								  <view class="photo-recognition-entry">  
+								    <u-button   
+								      type="primary"   
+								      plain   
+								      @click="openPhotoRecognition"  
+								    >  
+								      <u-icon name="camera" size="20"></u-icon>  
+								      拍照识别  
+								    </u-button> 
+									     <!-- 显示识别结果 -->  
+									     <!-- <div v-if="result">{{ result }}</div> -->
+			   
+			            <!-- 识别结果列表 -->  
+			            <view   
+			              v-if="result && result.length"   
+			              class="recognition-results"  
+			            >  
+			              <view   
+			                v-for="(item, index) in result"   
+			                :key="index"   
+			                class="recognition-item"  
+			              >  
+			                <view class="item-details">  
+			                  <text class="food-name">{{ item.name }}</text>  
+			                  <text   
+			                    v-if="item.has_calorie"   
+			                    class="food-calorie"  
+			                  >  
+			                    {{ item.calorie }}千卡  
+			                  </text>  
+			                  <text class="food-probability">  
+			                    置信度：{{ (item.probability * 100).toFixed(2) }}%  
+			                  </text>  
+			                </view>  
+			                <u-icon   
+			                  name="plus-circle"   
+			                  size="24"   
+			                  color="#2979ff"  
+			                  @click="selectRecognizedFood(item)"  
+			                ></u-icon>  
+			              </view>  
+			            </view>  
+			          </view>
+								<view class="form-item">
+									<text class="label">餐食类型</text>
+									<view class="picker-value" @click="openMealTypePicker()">
+										{{selectedMealType ? selectedMealType.label : '请选择餐食类型'}}
+										
+									</view>
+								</view>
+								
+								<!-- 餐食类型选择器 -->
+								<u-select
+								   mode="single-column"
+								     value-name="value"
+								     label-name="label"
+									:list="mealTypes"
+									v-model="showMealTypePicker"
+									placeholder="请选择餐食类型"
+									@confirm="confirmMealType"
+									:auto-open="true"
+									@close="showMealTypePicker=false"
+								></u-select>
+								
+								<view class="form-item">
+									<text class="label">食物名称</text>
+									<u-search
+										v-model="searchFoodName"
+										placeholder="搜索食物"
+										:clearabled="true"
+										:show-action="false"
+										@search="searchFoodForAdd"
+									></u-search>
+								</view>
+								<view class="search-results" v-if="addFoodResults.length > 0">
+									<view 
+										class="food-item" 
+										v-for="food in addFoodResults" 
+										:key="food.food_id"
+										@click="selectFoodForAdd(food)"
+									>
+										<text class="food-name">{{food.food_name}}</text>
+										<text class="food-calorie">{{food.calories}}千卡/100g</text>
+									</view>
+								</view>
+								<view class="form-item" v-if="selectedFood">
+									<text class="label">食用份量</text>
+									<u-number-box
+										v-model="foodQuantity"
+										:min="1"
+										:max="10"
+										@change="calculateCalories"
+									></u-number-box>
+									<text class="unit">份</text>
+								</view>
+								<view class="calories-info" v-if="selectedFood">
+									<text>预计热量：{{calculatedCalories}}千卡</text>
+								</view>
+							</view>
+							<view class="popup-footer">
+								<u-button type="primary" @click="confirmAddMeal">确认添加</u-button>
+							</view>
+						</view>
+					</u-popup>
 		</view>
 
 		<!-- 搜索食物模块 -->
@@ -343,7 +495,9 @@
 			async getFoodRecords() {
 				try {
 					const res = await this.$u.api.getPlanFoodList();
+					console.warn("getPlanFoodListres:",res)
 					this.todayRecords = Array.isArray(res) ? res : [];
+					console.warn("todayRecords:",this.todayRecords )
 					this.calculateTotalCalories();
 					// 获取饮食记录后更新推荐
 					await this.getRecommendFoods();
@@ -385,11 +539,14 @@
 					};
 					
 					const res = await this.$u.api.getRecommendFoods(params);
+					console.warn("getRecommendFoodsres",res)
 					if (Array.isArray(res)) {
 						this.recommendFoods = res.map(food => ({
 							...food,
 							recommendReason: this.generateRecommendReason(food, caloriePercentage)
+						
 						}));
+							console.warn("Array.isArray(res)",res)
 					}
 				} catch(e) {
 					console.error('获取推荐失败:', e);

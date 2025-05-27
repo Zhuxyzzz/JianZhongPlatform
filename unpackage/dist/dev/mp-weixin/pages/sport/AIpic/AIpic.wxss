@@ -1,0 +1,211 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* 1. Banner 样式 */
+.banner-swiper.data-v-745c0231 {
+	  width: 100%;
+	  height: 600rpx;
+	  margin-bottom: 10rpx;
+}
+.banner-image.data-v-745c0231 {
+	  width: 100%;
+	  height: 100%;
+}
+.ai-weightloss-container.data-v-745c0231 {
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+	/* 顶部标题 */
+.header.data-v-745c0231 {
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+.title.data-v-745c0231 {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff7b54;
+}
+	/* 上传照片区域 */
+.upload-section.data-v-745c0231 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.upload-btn.data-v-745c0231 {
+  background-color: #ff7b54;
+  color: #fff;
+  padding: 10rpx 20rpx;
+  border: none;
+  border-radius: 8rpx;
+  margin-bottom: 10rpx;
+}
+.preview-image.data-v-745c0231 {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 8rpx;
+}
+	/* 滑动条区域 */
+.slider-section.data-v-745c0231 {
+  margin: 20rpx 0;
+  padding: 0 10rpx;
+}
+.slider-label.data-v-745c0231 {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+	/* 操作按钮 */
+.action-section.data-v-745c0231 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+.preview-btn.data-v-745c0231 {
+  background-color: #ff7b54;
+  color: #fff;
+  padding: 10rpx 20rpx;
+  border: none;
+  border-radius: 8rpx;
+}
+	/* AI 预览结果展示 */
+.result-section.data-v-745c0231 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.result-title.data-v-745c0231 {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  color: #ff7b54;
+}
+.result-image.data-v-745c0231 {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 8rpx;
+}
+

@@ -39,8 +39,8 @@
 					},
 					{
 						icon:'../../static/icon/daka.png',
-						title:'打卡',
-						path:'/pages/clock/clock'
+						title:'智能问答',
+						path:'/pages/deepseek/deepseek'
 					}
 				]
 			}
